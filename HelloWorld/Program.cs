@@ -17,19 +17,17 @@ namespace HelloWorld
             string name = Console.ReadLine();
             Console.WriteLine("Hello " + name);
             Console.ReadKey();
-
-            int age;
+            
             Console.WriteLine("How Old Are You?");
-            age = Convert.ToInt32(Console.ReadLine());
-            if (int.TryParse(Console.ReadLine(), out age));
-
-            if (age >= 18)
-            {
-                Console.WriteLine("Access Granted");
-            }
-            else
-            {
-                Console.WriteLine("Access Denied");
+            if (int.TryParse(Console.ReadLine(), out age)){
+                if (age >= 18)
+                {
+                    Console.WriteLine("Access Granted");
+                }
+                else
+                {
+                    Console.WriteLine("Access Denied");
+                }
             }
             Console.WriteLine();
             Console.ReadKey();
