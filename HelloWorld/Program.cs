@@ -58,30 +58,46 @@ namespace HelloWorld
         {
             Console.WriteLine("This is inside my 2nd function");
             List<Music> musiclist = new List<Music>();
-            Music firstnote = new Music();
-            firstnote.note = "C";
-            firstnote.enabled = true;
-            firstnote.position = 1;
-
-            Music secondnote = new Music();
-            secondnote.note = "C#";
-            secondnote.enabled = false;
-            secondnote.position = 2;
-
-            Music thirdnote = new Music();
-            thirdnote.note = "D";
-            thirdnote.enabled = true;
-            thirdnote.position = 3;
-
-            musiclist.Add(firstnote);
-            musiclist.Add(secondnote);
-            musiclist.Add(thirdnote);
-
-            foreach (var note in musiclist.Where(note => note.enabled))
+            int position = 1;
+            var lastnote = "";
+            for (int i = 0; i < 50; i++)
+            {
+                position = position + i;
+                var currentnote = pickrandomnote(position, lastnote);
+                musiclist.Add(currentnote);
+                lastnote = currentnote.note;
+            }
+            
+            foreach (var note in musiclist.Where(note => note.enabled).OrderBy(note => note.position))
             {
                 Console.Write(note.note);
                 Console.Write(",");
             }
+        }
+
+        private static Music pickrandomnote(int position, string previousnote)
+        {
+            string[] possiblenotes = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
+            if (!string.IsNullOrEmpty(previousnote))
+            {
+                if (previousnote == "C")
+                {
+                    possiblenotes = new string[] { "C", "D", "D#"};
+                }
+                else if (previousnote == "D")
+                {
+                    possiblenotes = new string[] { "D", "E", "F#"};
+                }
+            }
+            int[] trueorfalse = { 0, 1 };
+
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            Music music = new Music();
+            music.note = possiblenotes[random.Next(possiblenotes.Length)];
+            music.enabled = Convert.ToBoolean(trueorfalse[random.Next(2)]);
+            music.position = position;
+
+            return music;
         }
     }
 }
